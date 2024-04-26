@@ -96,5 +96,11 @@ class DBStorage:
             The number of objects in the specified class, or the
             total number of objects in the database.
         """
-        object_dict = models.storage.all(cls)
-        return len(object_dict)
+        if cls is None:
+            all_objects = []
+            for model_class in classes.values():
+                all_objects.extend(models.storage.all(model_class).values())
+            return len(all_objects)
+        if cls in classes.values():
+            return len(models.storage.all(cls).values())
+        return None
