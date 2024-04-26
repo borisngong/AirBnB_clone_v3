@@ -16,7 +16,7 @@ app.register_blueprint(app_views)
 
 # Method to handle app teardown
 @app.teardown_appcontext
-def teardown_appcontext(Exception):
+def teardown_appcontext(self):
     """Respondible for closing database connection after each request"""
     storage.close()
 

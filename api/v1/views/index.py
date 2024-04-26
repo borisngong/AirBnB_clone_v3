@@ -2,13 +2,15 @@
 
 
 from api.v1.views import app_views
-from flask import Response, json
+from flask import jsonify
 
 @app_views.route("/status", methods=['GET'])
 def app_get_status():
-    response = {
+    boro_api_status = {
         "status": "OK"
     }
-    json_response = json.dumps(response, indent=4, separators=(',', ': '))
-    json_response_with_newline = json_response + '\n'
-    return Response(json_response_with_newline, content_type='application/json')
+    api_responds = jsonify(boro_api_status), 200
+
+    return api_responds
+
+
