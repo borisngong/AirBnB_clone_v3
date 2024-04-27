@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" """
+"""The Blueprint module responsible for API views"""
+
 
 from flask import Blueprint
 
