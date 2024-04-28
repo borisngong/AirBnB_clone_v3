@@ -5,6 +5,7 @@ from os import getenv
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -14,11 +15,23 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_appcontext(error=None):
+def teardown_appcontext(exception):
     """
     Responsible for closing the database connection after each request
     """
     storage.close()
+
+@app.errorhandler(404)
+def handle_404(exception):
+    """
+    Responsible for handling 404 error status and returns JSON response"""
+    json_error_message = {
+        "error": "Not found"
+    }
+
+    error_json_response = jsonify(json_error_message), 400
+
+    return error_json_response
 
 
 if __name__ == '__main__':
