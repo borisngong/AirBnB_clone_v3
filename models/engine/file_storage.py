@@ -71,13 +71,11 @@ class FileStorage:
 
     def get(self, cls, id):
         """Retrieve an object from the database by class and ID."""
-        if cls and id:
-            if cls in classes.values():
-                all_objects = self.all(cls)
-                for obj in all_objects.values():
-                    if obj.id == id:
-                        return obj
-            return None
+        boro_class = self.all(cls)
+
+        for n_entity in boro_class.values():
+            if id == str(n_entity.id):
+                return n_entity
         return None
 
     def count(self, cls=None):
@@ -85,11 +83,5 @@ class FileStorage:
         If cls is None, count all objects across all classes.
         If cls is specified, count objects only for that class.
         """
-        if cls is None:
-            all_objects = []
-            for model_class in classes.values():
-                all_objects.extend(self.all(model_class).values())
-            return len(all_objects)
-        if cls in classes.values():
-            return len(self.all(cls).values())
-        return None
+        boro_count = len(self.all(cls))
+        return boro_count
