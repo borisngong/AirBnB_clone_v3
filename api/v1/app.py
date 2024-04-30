@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Module responsible for running the Flask application"""
 
+
+from flask_cors import CORS
 from os import getenv
 from flask import Flask
 from models import storage
@@ -12,6 +14,7 @@ app = Flask(__name__)
 
 
 app.register_blueprint(app_views)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
@@ -24,7 +27,8 @@ def teardown_appcontext(exception):
 @app.errorhandler(404)
 def handle_404(exception):
     """
-    Responsible for handling 404 error status and returns JSON response"""
+    Responsible for handling 404 error status and returns JSON response
+    """
     json_error_message = {
         "error": "Not found"
     }
