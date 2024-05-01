@@ -1,18 +1,14 @@
 #!/usr/bin/python3
 """Module responsible for running the Flask application"""
 
-
 from flask_cors import CORS
 from os import getenv
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from flask import jsonify
 
 
 app = Flask(__name__)
-
-
 app.register_blueprint(app_views)
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
@@ -30,13 +26,13 @@ def handle_404(exception):
     """
     Responsible for handling 404 error status and returns JSON response
     """
-    json_error_message = {
+    h_json_error_message = {
         "error": "Not found"
     }
 
-    error_json_response = jsonify(json_error_message), 400
+    h_error_json_response = jsonify(h_json_error_message), 404
 
-    return error_json_response
+    return h_error_json_response
 
 
 if __name__ == '__main__':
