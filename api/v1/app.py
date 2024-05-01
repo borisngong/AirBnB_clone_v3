@@ -26,7 +26,7 @@ def teardown_appcontext(exception):
 
 
 @app.errorhandler(404)
-def handle_404(exception):
+def handle_404():
     """
     Responsible for handling 404 error status and returns JSON response
     """
