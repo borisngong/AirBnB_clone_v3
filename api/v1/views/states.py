@@ -11,6 +11,7 @@ from models.state import State
 app = Flask(__name__)
 """Ensuring the necessary imports and Flask app initialization"""
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def obtain_all_states():
     """Responsible for retrieving the list of all State objects"""
@@ -28,7 +29,8 @@ def obtain_state_by_id(state_id):
     return jsonify(get_state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def remove_state(state_id):
     """Responsible for deleting a specific State object by ID"""
     state = storage.get(State, state_id)
