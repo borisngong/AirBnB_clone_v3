@@ -34,7 +34,7 @@ def handle_404():
         "error": "Not found"
     }
 
-    b_error_json_response = jsonify(h_json_error_message), 404
+    b_error_json_response = jsonify(h_json_error_message), 400
 
     return b_error_json_response
 
