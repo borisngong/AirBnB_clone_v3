@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This Module iss responsible for working with places_reviews"""
+"""This Module is responsible for working with places_reviews"""
 
 
 from flask import jsonify, request, abort
@@ -12,7 +12,7 @@ from models.user import User
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET"], strict_slashes=False)
 def obtain_all_place_reviews(place_id):
-    """Responsible retrieving the list of all Review objects of a Place"""
+    """Responsible for retrieving the list of all Review objects of a Place"""
     b_place_data = storage.get(Place, place_id)
     if b_place_data is None:
         abort(404)
@@ -23,12 +23,11 @@ def obtain_all_place_reviews(place_id):
 
 @app_views.route("/reviews/<review_id>", methods=["GET"], strict_slashes=False)
 def id_obtain_review(review_id):
-    """Responsible retrieving a specific Review object by ID"""
+    """Responsible for retrieving a specific Review object by ID"""
     b_review_data = storage.get(Review, review_id)
     if b_review_data is None:
         abort(404)
-    json_response = jsonify(b_review_data.to_dict())
-    return json_response
+    return jsonify(b_review_data.to_dict())
 
 
 @app_views.route("/reviews/<review_id>", methods=["DELETE"], strict_slashes=False)
@@ -39,8 +38,7 @@ def remove_review(review_id):
         abort(404)
     storage.delete(b_review_data)
     storage.save()
-    json_response = jsonify({}), 200
-    return json_response
+    return jsonify({}), 200
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["POST"], strict_slashes=False)
@@ -62,23 +60,21 @@ def make_new_review(place_id):
         abort(404)
     n_review = Review(place_id=place_id, user_id=user_id, **b_place_json_data)
     n_review.save()
-    json_response = jsonify(n_review.to_dict()), 201
-    return json_response
+    return jsonify(n_review.to_dict()), 201
 
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"], strict_slashes=False)
 def edit_update_review(review_id):
-    """Updates a specific Review object by ID"""
+    """Responsible for Updating a specific Review object by ID"""
     b_review_data = storage.get(Review, review_id)
     if b_review_data is None:
         abort(404)
     review_json_data = request.get_json()
     if review_json_data is None:
         abort(400, 'Not a JSON')
-    disregard_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
+    ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     for k, v in review_json_data.items():
-        if k not in disregard_keys:
+        if k not in ignore_keys:
             setattr(b_review_data, k, v)
     b_review_data.save()
-    json_response = jsonify(b_review_data.to_dict()), 200
-    return json_response
+    return jsonify(b_review_data.to_dict()), 200
