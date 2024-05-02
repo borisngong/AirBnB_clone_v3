@@ -12,7 +12,7 @@ def obtain_all_amenities():
     """Responsible for retrieving the list of all Amenity objects"""
     b_amenities_data = storage.all(Amenity).values()
     b_amenities = [amenity.to_dict() for amenity in b_amenities_data]
-    return jsonify(b_amenities)
+    return jsonify(b_amenities), 200
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"], strict_slashes=False)
